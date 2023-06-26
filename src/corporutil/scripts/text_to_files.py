@@ -9,36 +9,22 @@ from pathlib import Path
 import click
 from loguru import logger
 
+from corporutil.args import retrieve_text_options, outdir_arg
 from corporutil.dataiter import get_documents_from_source
 
 
-
 @click.command()
-@click.argument('file', type=click.Path(dir_okay=False, path_type=Path), default=None)
-@click.option('--column', 'columns', multiple=True, type=str,
-              help='Name of columns. If including a lot of metadata and text, provide the unique id as'
-                   '  element 0 (first) and the text as element -1 (last).')
-@click.option('--outdir', type=click.Path(file_okay=False, path_type=Path), default=None,
-              help='Directory to create subfolders and filelists.')
+@retrieve_text_options
+@outdir_arg
 @click.option('--n-dirs', default=1, type=int,
               help='Number of directories to create.')
 @click.option('--text-extension', default='.txt',
               help='Extension of text files to be created.')
 @click.option('--text-encoding', default='utf8',
               help='Encoding for writing text files.')
-@click.option('--file-encoding', default='utf8',
-              help='Encoding for source CSV file.')
-@click.option('--sep', default=',',
-              help='Column delimiter for csv file.')
-@click.option('--connection-string', default=None,
-              help='Connection string if using database table/query.')
-@click.option('--filearg', 'fileargs', multiple=True,
-              help='Any additional arguments to pass to relevant pandas read_*; should be of form key==value.')
 @click.option('--force', is_flag=True, default=False)
-def text_from_file(file, columns, outdir: Path, n_dirs=1, text_extension='.txt', connection_string=None,
-                   text_encoding='utf8', file_encoding='utf8', sep=',', fileargs=None, force=False):
-    fileargs = {key: value for arg in fileargs or [] for key, value in arg.split('==')}
-    it = get_documents_from_source(file, columns, file_encoding, sep, connection_string, **fileargs)
+def text_from_file(outdir: Path, n_dirs=1, text_extension='.txt', text_encoding='utf8', force=False, **fileargs):
+    it = get_documents_from_source(**fileargs)
     build_files(it, outdir=outdir, n_dirs=n_dirs, text_extension=text_extension, text_encoding=text_encoding,
                 force=force)
 

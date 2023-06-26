@@ -16,6 +16,10 @@ def dociter(it, columns: list):
             yield row
 
 
+def compile_fileargs(fileargs):
+    return {key: value for arg in fileargs or [] for key, value in arg.split('==')}
+
+
 def get_documents_from_source(file, columns, file_encoding='utf8', sep=',', connection_string=None, chunksize=10_000,
                               **fileargs):
     """
@@ -28,6 +32,8 @@ def get_documents_from_source(file, columns, file_encoding='utf8', sep=',', conn
     :param fileargs:
     :return:
     """
+    if 'fileargs' in fileargs:
+        fileargs = compile_fileargs(fileargs['fileargs'])
     match file.suffix:
         case '.csv':
             it = pd.read_csv(file, **{
