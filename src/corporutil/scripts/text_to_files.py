@@ -30,7 +30,7 @@ def text_from_file(outdir: Path, n_dirs=1, text_extension='.txt', text_encoding=
                    ensure_newline=False, **fileargs):
     it = get_documents_from_source(**fileargs)
     build_files(it, outdir=outdir, n_dirs=n_dirs, text_extension=text_extension, text_encoding=text_encoding,
-                force=force)
+                ensure_newline=ensure_newline, force=force)
 
 
 def build_files(text_gen, outdir: Path, n_dirs=1, text_extension='.txt', text_encoding='utf8',
@@ -56,6 +56,7 @@ def build_files(text_gen, outdir: Path, n_dirs=1, text_extension='.txt', text_en
     filelists = [open(outdir / f'filelist{i}.txt', 'w') if n_dirs > 1
                  else open(outdir / f'filelist.txt', 'w')
                  for i in range(n_dirs)]
+    i = 0
     for i, (note_id, text) in enumerate(text_gen):
         outfile = outdirs[i % n_dirs] / f'{note_id}{text_extension}'
         if ensure_newline and not text.endswith('\n'):  # ensure that every text files ends in a newline
@@ -65,6 +66,7 @@ def build_files(text_gen, outdir: Path, n_dirs=1, text_extension='.txt', text_en
         filelists[i % n_dirs].write(f'{outfile.absolute()}\n')
     for fl in filelists:
         fl.close()
+    logger.info(f'Wrote corpus of size: {i:,d} to {n_dirs} directories.')
 
 
 if __name__ == '__main__':
