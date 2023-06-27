@@ -22,3 +22,5 @@ Types of changes:
 * Script to build text corpus from database, csv file, or sas7bdat dataset.
 * Script to collect regular expression counts from dataset source.
 * Provided option to ensure that all generated text files end in a newline.
+* Added `charset-normalizer` package to handle encodings
+* Created script to ensure existing files terminate in a newline.

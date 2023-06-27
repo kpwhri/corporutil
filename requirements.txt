@@ -3,3 +3,4 @@ click
 pandas
 sqlalchemy
 pyodbc
+charset-normalizer
