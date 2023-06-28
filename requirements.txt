@@ -4,3 +4,4 @@ pandas
 sqlalchemy
 pyodbc
 charset-normalizer
+spacy
