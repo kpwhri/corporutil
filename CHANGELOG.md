@@ -24,3 +24,5 @@ Types of changes:
 * Provided option to ensure that all generated text files end in a newline.
 * Added `charset-normalizer` package to handle encodings
 * Created script to ensure existing files terminate in a newline.
+* Wrote script to count regular expression hits in a corpus.
+* Created script to generate stats found in a corpus.
