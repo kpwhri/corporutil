@@ -25,6 +25,3 @@ def find_regexes_in_corpus(it, regexes):
                 curr_counts[name] += 1
         yield meta, curr_counts
         all_counts += curr_counts
-
-
-
