@@ -26,3 +26,4 @@ Types of changes:
 * Created script to ensure existing files terminate in a newline.
 * Wrote script to count regular expression hits in a corpus.
 * Created script to generate stats found in a corpus.
+* Generate studyid-level stats from a pandas DataFrame 
