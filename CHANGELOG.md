@@ -22,8 +22,9 @@ Types of changes:
 * Script to build text corpus from database, csv file, or sas7bdat dataset.
 * Script to collect regular expression counts from dataset source.
 * Provided option to ensure that all generated text files end in a newline.
-* Added `charset-normalizer` package to handle encodings
+* Added `charset-normalizer` package to handle encodings.
 * Created script to ensure existing files terminate in a newline.
 * Wrote script to count regular expression hits in a corpus.
 * Created script to generate stats found in a corpus.
-* Generate studyid-level stats from a pandas DataFrame 
+* Generate studyid-level stats from a pandas DataFrame.
+* Iterator for reading a file-based corpus (in directory).

@@ -14,6 +14,7 @@ class FileWriter:
         if suffix and not suffix.startswith('.'):
             suffix = f'.{suffix}'
 
+        directory.mkdir(exist_ok=True)
         self.path = directory / f'{name}_{get_dt()}{suffix}{ext}'
         self.fh = None
         self.kwargs = kwargs

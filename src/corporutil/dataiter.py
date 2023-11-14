@@ -16,14 +16,23 @@ def dociter(it, columns: list):
             yield row
 
 
+def diriter(path: Path, encoding='utf8', glob_pattern='*', **kwargs):
+    for file in path.glob(glob_pattern):
+        with open(file, encoding=encoding) as fh:
+            text = fh.read()
+        yield file.stem, text
+
+
 def compile_fileargs(fileargs):
     return {key: value for arg in fileargs or [] for key, value in arg.split('==')}
 
 
-def get_documents_from_source(file, columns, file_encoding='utf8', sep=',', connection_string=None, chunksize=10_000,
-                              **fileargs):
+def get_documents_from_source(file: Path, columns, file_encoding='utf8', sep=',', connection_string=None,
+                              chunksize=10_000, glob='*', **fileargs):
     """
 
+    :param chunksize:
+    :param glob:
     :param file:
     :param columns:
     :param file_encoding:
@@ -34,6 +43,8 @@ def get_documents_from_source(file, columns, file_encoding='utf8', sep=',', conn
     """
     if 'fileargs' in fileargs:
         fileargs = compile_fileargs(fileargs['fileargs'])
+    if file.is_dir():  # corpus of files
+        yield from diriter(file, file_encoding, glob, **fileargs)
     match file.suffix:
         case '.csv':
             it = pd.read_csv(file, **{

@@ -5,7 +5,7 @@ import click
 
 def retrieve_text_options(f):
     return click.argument(
-        'file', type=click.Path(dir_okay=False, path_type=Path), default=None
+        'file', type=click.Path(path_type=Path), default=None
     )(
         click.option(
             '--column', 'columns', multiple=True, type=str,
@@ -25,7 +25,8 @@ def retrieve_text_options(f):
                         click.option('--filearg', 'fileargs', multiple=True,
                                      help='Any additional arguments to pass to relevant pandas read_*;'
                                           ' should be of form key==value.')
-                        (f)
+                        (click.option('--glob', 'glob', default='*',
+                                      help='For directory, specify glob pattern to select relevant files')(f))
                     )
                 )
             )
