@@ -47,6 +47,8 @@ def get_documents_from_source(file: Path, columns, file_encoding='utf8', sep=','
         fileargs = compile_fileargs(fileargs['fileargs'])
     if file.is_dir():  # corpus of files
         yield from diriter(file, file_encoding, glob, **fileargs)
+        return
+    it = None
     match file.suffix:
         case '.csv':
             it = pd.read_csv(file, **{
@@ -64,8 +66,7 @@ def get_documents_from_source(file: Path, columns, file_encoding='utf8', sep=','
                 for line in fh:
                     data = json.loads(line.strip())
                     yield [data[col] for col in columns]
-        case _:
-            it = None
+            return
     if it is None:
         if 'select ' in file.stem.lower():
             it = pd.read_sql_query(file.name, con=connection_string, chunksize=chunksize, **fileargs)
