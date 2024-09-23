@@ -19,9 +19,9 @@ from corporutil.stats import build_stats, build
 @click.option('--patient-col', type=int, default=None,
               help='Specify patient column index.')
 @click.option('--encounter-col', type=int, default=None,
-              help='Specify patient column index.')
+              help='Specify encounter column index.')
 @click.option('--text-col', type=int, default=-1,
-              help='Specify patient column index.')
+              help='Specify note text column index.')
 @click.option('--kind', default='json',
               help='Specify json or csv output types.')
 def build_corpus_stats(outdir: Path, patient_col, encounter_col, text_col=-1, spacy_model=None, kind='json',

@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 from pathlib import Path
 
@@ -57,6 +59,11 @@ def get_documents_from_source(file: Path, columns, file_encoding='utf8', sep=','
         case '.sql':  # interpret as a tablename
             it = pd.read_sql_table(file.stem, columns=columns, con=connection_string,
                                    chunksize=chunksize, **fileargs)
+        case '.jsonl':  # jsonlines
+            with open(file, encoding=file_encoding) as fh:
+                for line in fh:
+                    data = json.loads(line.strip())
+                    yield [data[col] for col in columns]
         case _:
             it = None
     if it is None:

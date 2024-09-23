@@ -19,6 +19,7 @@ Types of changes:
 
 ### Added
 
+* Reading from jsonl too
 * Script to build text corpus from database, csv file, or sas7bdat dataset.
 * Script to collect regular expression counts from dataset source.
 * Provided option to ensure that all generated text files end in a newline.
