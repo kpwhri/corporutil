@@ -104,10 +104,12 @@ def get_stat(lst):
 
 def build_stats(it, text_col=-1, enc_col=None, pt_col=None, nlp=None):
     data = defaultdict(lambda: defaultdict(list))  # patient -> encounter -> doc -> DocStats
-    if enc_col and pt_col:
+    if enc_col is not None and pt_col is not None:
         pts, encs, docs = build_stats_all(((d[pt_col], d[enc_col], d[text_col]) for d in it), nlp=nlp)
-    elif pt_col:
+    elif pt_col is not None:
         pts, encs, docs = build_stats_all(((d[pt_col], 0, d[text_col]) for d in it), nlp=nlp)
+    elif enc_col is not None:
+        pts, encs, docs = build_stats_all(((0, d[enc_col], d[text_col]) for d in it), nlp=nlp)
     else:  # doc only
         pts, encs, docs = build_stats_all(((0, 0, d[text_col]) for d in it), nlp=nlp)
     # get statistics
